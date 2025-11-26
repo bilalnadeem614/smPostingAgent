@@ -1,0 +1,869 @@
+{
+  "name": "smPostingAgent",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        48
+      ],
+      "id": "8096c733-2fb7-4204-ba44-9ffd992c33c6",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003237764079",
+        "text": "={{ $json.data }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        -64
+      ],
+      "id": "158524b3-a361-4f90-bfee-640b891f6300",
+      "name": "Send a text message",
+      "webhookId": "6b0e9560-87d2-449b-aa10-59e9239749b5",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "-1003237764079",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        320
+      ],
+      "id": "2b9d99e5-403d-4467-a273-24666712f168",
+      "name": "Send a photo message",
+      "webhookId": "1586e0fe-f5f0-46bc-89c4-5d1e011f0132",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "-1003237764079",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        672
+      ],
+      "id": "e8b72d12-51e4-46ce-ba11-d09d603f7fa7",
+      "name": "Send a video",
+      "webhookId": "8152b807-8964-47d3-bf01-7e415185f836",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        -480
+      ],
+      "id": "9da23d5b-a42d-47c6-a2db-46e4fbc9a4b6",
+      "name": "Create Tweet",
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "Gs9NyM2pEgzF9VS6",
+          "name": "X account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -288
+      ],
+      "id": "d7eb7270-4ed7-4f04-9ced-5e37ef81c55c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a5Lk2RCyWYtOpjK1",
+          "name": "Gemini-API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $json.output.title }}",
+        "regionCode": "PK",
+        "categoryId": "24",
+        "options": {
+          "description": "={{ $json.output.description }}",
+          "privacyStatus": "private"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        432
+      ],
+      "id": "7e99ed0c-25cd-415a-af92-d2ddf184bfe9",
+      "name": "Upload a video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "5t40JAuEkhniHTD1",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        144
+      ],
+      "id": "8f09e191-b7cf-4c25-96aa-bebb3d655062",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a5Lk2RCyWYtOpjK1",
+          "name": "Gemini-API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"title\": \"Your Title Here\",\n  \"description\": \"Your description here...\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1312,
+        128
+      ],
+      "id": "9fec3c5d-1a6e-4a79-b708-f6c2972f314d",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1600,
+        432
+      ],
+      "id": "aa6ac6b6-c0b3-4901-bdf1-ac7f7c799684",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "person": "VZxdcL0a0H",
+        "text": "={{ $json.data }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        752
+      ],
+      "id": "e0feff2e-1906-4e22-80a9-7ad4fad6916f",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "Nrh4ant6QLfi215w",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1360,
+        752
+      ],
+      "id": "87a32f4f-a459-4d8d-96e5-a45fa1302300",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "404d530a-14c0-4ff5-8d4e-73ec4063d230",
+              "leftValue": "={{ $json.message.chat.type }}",
+              "rightValue": "=private",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2032,
+        320
+      ],
+      "id": "1ce7bb47-1d89-4d97-9a1d-f657b365f74c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2240,
+        320
+      ],
+      "id": "b692260a-0a42-4e27-b3ad-64b05c369e48",
+      "name": "smPostingbot",
+      "webhookId": "6349d030-6bbf-485e-bed3-7182e350c8e2",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('smPostingbot').item.json.message.chat.id }}",
+        "text": "Invalid request.",
+        "additionalFields": {
+          "reply_to_message_id": 0
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1840,
+        608
+      ],
+      "id": "aeddc10c-c58b-4c8c-af8b-3c6d2bec66cd",
+      "name": "Invalid-Request-Response",
+      "webhookId": "93b0534f-cf2e-4361-b6fe-bbb8d6eb8eaf",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Processing your request...",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1792,
+        16
+      ],
+      "id": "907b9576-3c34-4a9a-8c12-9fc314def77e",
+      "name": "Processing-Message",
+      "webhookId": "cfb979a6-0083-4c61-85f6-a67acb645439",
+      "credentials": {
+        "telegramApi": {
+          "id": "TNUtzZT1Hek80wvu",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1552,
+        528
+      ],
+      "id": "8528547c-229c-49a4-8288-194f484efc0b",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a5Lk2RCyWYtOpjK1",
+          "name": "Gemini-API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"txt\":\"file1\",\n\"img\":\"file2\",\n\"vid\":\"file3\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1392,
+        512
+      ],
+      "id": "8d0f854f-8364-4559-9c3e-9d7d3c590e29",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.output.txt }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -528,
+        64
+      ],
+      "id": "2a7cf688-2cd2-4798-97db-a349698962a5",
+      "name": "Search Text File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.output.img }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -544,
+        288
+      ],
+      "id": "1cb2cbde-d1c4-431c-adb7-1a73e5990108",
+      "name": "Search Image File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.output.vid }}",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -544,
+        528
+      ],
+      "id": "d8a7baa6-5338-40ac-854e-be23fced7bb2",
+      "name": "Search Video File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        64
+      ],
+      "id": "f6aa0fc7-afb5-4377-8346-f3772ebfb44f",
+      "name": "Download Text File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -304,
+        288
+      ],
+      "id": "f9cc2a17-6526-4e3a-af8c-8475e1aafac0",
+      "name": "Download Image File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        528
+      ],
+      "id": "d53984cd-9864-4190-9e49-1c4b334c0b37",
+      "name": "Download Video File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "diICRepSWn1LlBaZ",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Working of the flow\n\n### User will send file names through bot message.\n### AI agent will extract names and pass to next nodes for downloading.\n### gDrive nodes first search and then download the files.\n### The downloaded files will be posted on the social media platforms \n### AI-Agents will be convert the content according to specification of the platform where required.",
+        "height": 352,
+        "width": 1008,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2240,
+        -624
+      ],
+      "id": "21bff3ba-2eae-4669-a7cb-cdaa43dbaee0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('smPostingbot').item.json.message.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Give JSON of the file names only. First text file, second image and last video"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -1552,
+        304
+      ],
+      "id": "c5252b7d-1372-4da8-a6f8-238904710311",
+      "name": "File Name Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "options": {
+          "systemMessage": "Rewrite the following text as a single tweet for X (Twitter). \n- Max 280 characters\n- Keep core message\n- Use clear, engaging language\n- Do NOT add hashtags or emojis unless in original\n- Return ONLY the tweet text, nothing else"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        800,
+        -480
+      ],
+      "id": "7ad85473-7f8b-4258-9044-a05569cca1ae",
+      "name": "Tweeter-Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a YouTube content creator. Based on the following input, generate a title and description.\n\nRules:\n- Title: max 100 characters, engaging, clear, no clickbait\n- Description: 2–5 sentences, include key details, friendly tone\n- Return JSON only, no extra text"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1152,
+        -32
+      ],
+      "id": "26b10a11-51ca-4cd1-ab6c-febb00990776",
+      "name": "YT-Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tweeter-Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "YT-Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Send a photo message": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tweeter-Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "YT-Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "YT-Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Upload a video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a video": {
+      "main": [
+        []
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Processing-Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Invalid-Request-Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "smPostingbot": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing-Message": {
+      "main": [
+        [
+          {
+            "node": "File Name Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "File Name Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "File Name Extractor",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Text File": {
+      "main": [
+        [
+          {
+            "node": "Download Text File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Image File": {
+      "main": [
+        [
+          {
+            "node": "Download Image File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Video File": {
+      "main": [
+        [
+          {
+            "node": "Download Video File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Text File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image File": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Video File": {
+      "main": [
+        [
+          {
+            "node": "Send a video",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Name Extractor": {
+      "main": [
+        [
+          {
+            "node": "Search Image File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Video File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Search Text File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tweeter-Agent": {
+      "main": [
+        [
+          {
+            "node": "Create Tweet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YT-Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "708bd908-0e55-4de1-89d4-1b0e1faa522e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "065a2eddb3ce5a54c7c73505ce6c4f9a65e209fc435975de3ea8218f3f523ead"
+  },
+  "id": "DfiZP7zatZLS43rS",
+  "tags": []
+}
