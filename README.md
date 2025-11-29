@@ -2,15 +2,15 @@
 
 # 🤖 Social Auto-Poster Agent (n8n + Gemini)
 
-An AI-powered Telegram bot that auto-posts content from Google Drive to **Twitter (X), LinkedIn, YouTube, and Telegram Group** — all triggered by a simple `/post` command.
+An AI-powered Telegram bot that auto-posts content from Google Drive to **Twitter (X), LinkedIn, YouTube, and Telegram Group** — all triggered by a Telegram bot.
 
 [Demo] https://youtu.be/SrJLgTsKd8A 
 
 ---
 
 ## ✨ Features
-- 📩 **Trigger via Telegram**: Send `/post` in private chat
-- 📁 **Fetch from Google Drive**: Pulls text, image, and video from a "Content" folder
+- 📩 **Trigger via Telegram**: Send `/post` and file names in private chat
+- 📁 **Fetch from Google Drive**: Pulls text, image, and video from gDrive
 - 🧠 **AI Optimization**: Uses **Gemini** to tailor content per platform:
   - **Twitter**: ≤280 characters
   - **LinkedIn**: Professional tone, ≤3,000 chars
