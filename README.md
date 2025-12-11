@@ -22,7 +22,7 @@ An AI-powered Telegram bot that auto-posts content from Google Drive to **Twitte
 ---
 
 ## 🛠️ Tech Stack
-- **Automation**: [n8n v1.117.3](https://n8n.io/)
+- **Automation**: [n8n](https://n8n.io/)
 - **AI**: Google Gemini (`gemini-pro`)
 - **Messaging**: Telegram Bot API
 - **Storage**: Google Drive
