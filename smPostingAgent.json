@@ -9,8 +9,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -32,
-        48
+        0,
+        16
       ],
       "id": "8096c733-2fb7-4204-ba44-9ffd992c33c6",
       "name": "Extract from File"
@@ -181,58 +181,6 @@
       ],
       "id": "9fec3c5d-1a6e-4a79-b708-f6c2972f314d",
       "name": "Structured Output Parser"
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        1600,
-        432
-      ],
-      "id": "aa6ac6b6-c0b3-4901-bdf1-ac7f7c799684",
-      "name": "Merge"
-    },
-    {
-      "parameters": {
-        "person": "VZxdcL0a0H",
-        "text": "={{ $json.data }}",
-        "shareMediaCategory": "IMAGE",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.linkedIn",
-      "typeVersion": 1,
-      "position": [
-        1664,
-        752
-      ],
-      "id": "e0feff2e-1906-4e22-80a9-7ad4fad6916f",
-      "name": "Create a post",
-      "credentials": {
-        "linkedInOAuth2Api": {
-          "id": "Nrh4ant6QLfi215w",
-          "name": "LinkedIn account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        1360,
-        752
-      ],
-      "id": "87a32f4f-a459-4d8d-96e5-a45fa1302300",
-      "name": "Merge1"
     },
     {
       "parameters": {
@@ -520,8 +468,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2240,
-        -624
+        -1616,
+        -240
       ],
       "id": "21bff3ba-2eae-4669-a7cb-cdaa43dbaee0",
       "name": "Sticky Note"
@@ -578,6 +526,108 @@
       ],
       "id": "26b10a11-51ca-4cd1-ab6c-febb00990776",
       "name": "YT-Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        848,
+        1088
+      ],
+      "id": "ba8e2edb-52bf-40b8-8854-bfa8db9f8446",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a5Lk2RCyWYtOpjK1",
+          "name": "Gemini-API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"post\":\"Your LinkedIn Post\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1008,
+        1088
+      ],
+      "id": "f2836d04-01d0-47e7-96f2-8ebbf98f607a",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a professional LinkedIn content writer. Your task is to convert the given input text into an engaging, concise, and professional LinkedIn post. Use a friendly yet polished tone, include relevant emojis for visual appeal, structure the message with clear line breaks, add a compelling hook at the start, and end with 3–5 industry-relevant hashtags. Avoid jargon unless appropriate for a business or tech audience. Keep the post under 300 characters whenever possible, or split into short paragraphs if longer. Always maintain the original intent and key information of the input. Output only JSON as post."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        864,
+        816
+      ],
+      "id": "2c9f7a1e-896d-4593-9ccb-c0787447d349",
+      "name": "LinkedIn-Agent"
+    },
+    {
+      "parameters": {
+        "person": "VZxdcL0a0H",
+        "text": "={{ $json.output.post }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        800
+      ],
+      "id": "42a8162c-abbc-42aa-8c8a-6d131f878e10",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "Nrh4ant6QLfi215w",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1344,
+        768
+      ],
+      "id": "fb5af66b-7613-46cc-b4af-c2b71bfa6b6a",
+      "name": "Pic+Txt"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1600,
+        432
+      ],
+      "id": "aa6ac6b6-c0b3-4901-bdf1-ac7f7c799684",
+      "name": "Vid+Txt"
     }
   ],
   "pinData": {},
@@ -601,9 +651,9 @@
             "index": 0
           },
           {
-            "node": "Merge1",
+            "node": "LinkedIn-Agent",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -646,31 +696,9 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Upload a video",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Send a video": {
       "main": [
         []
-      ]
-    },
-    "Merge1": {
-      "main": [
-        [
-          {
-            "node": "Create a post",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "If": {
@@ -788,7 +816,7 @@
             "index": 0
           },
           {
-            "node": "Merge1",
+            "node": "Pic+Txt",
             "type": "main",
             "index": 0
           }
@@ -804,7 +832,7 @@
             "index": 0
           },
           {
-            "node": "Merge",
+            "node": "Vid+Txt",
             "type": "main",
             "index": 0
           }
@@ -847,9 +875,64 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Vid+Txt",
             "type": "main",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LinkedIn-Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "LinkedIn-Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn-Agent": {
+      "main": [
+        [
+          {
+            "node": "Pic+Txt",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Pic+Txt": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vid+Txt": {
+      "main": [
+        [
+          {
+            "node": "Upload a video",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -859,11 +942,18 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "708bd908-0e55-4de1-89d4-1b0e1faa522e",
+  "versionId": "655ee0ca-f524-435a-9f12-ae166a46e130",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "065a2eddb3ce5a54c7c73505ce6c4f9a65e209fc435975de3ea8218f3f523ead"
   },
   "id": "DfiZP7zatZLS43rS",
-  "tags": []
+  "tags": [
+    {
+      "name": "Social-Media",
+      "id": "HpNRI1BqR6x5m6DV",
+      "updatedAt": "2025-12-11T10:59:11.842Z",
+      "createdAt": "2025-12-11T10:59:11.842Z"
+    }
+  ]
 }
